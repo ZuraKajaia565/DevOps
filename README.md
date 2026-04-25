@@ -15,6 +15,10 @@ Replace this after the first successful Vercel deployment:
 ![Hosted application](./figures/host.jpeg)
 ![Changed Readme file CI](./figures/readme1.jpeg)
 ![Changed Readme file CD](./figures/readme2.jpeg)
+<<<<<<< HEAD
+=======
+![pull-request](./figures/pull-request.jpeg)
+>>>>>>> 5c4f35f (final version)
 
 ## Application Overview
 
@@ -127,46 +131,90 @@ npx vercel link
 
 After linking locally, Vercel creates `.vercel/project.json`. Copy the `orgId` and `projectId` values into GitHub secrets. Do not commit `.vercel/`.
 
-## Deployment Strategy
+## Strategy Explanation
 
-### Chosen Strategy: Rolling Deployment
+### Which Update Strategy did you choose?
 
-Vercel is a serverless platform. It does not update one long-running server in place. Instead, every production deployment creates a new immutable deployment.
+I chose a **Blue-Green Deployment strategy (as implemented by Vercel)**.
 
-For this assignment, the chosen strategy is a **rolling deployment simulated through Vercel production promotion**:
+In this approach, production traffic is always served from a stable “live” environment (production deployment), while new changes are first built and deployed to isolated preview environments.
 
-1. GitHub Actions runs tests first.
-2. If tests pass on `main`, the workflow builds a new Vercel production artifact.
-3. Vercel deploys the new immutable version.
-4. Vercel routes production traffic to the new deployment.
-5. The previous deployment remains available in Vercel history for rollback.
+Once the changes pass testing and are merged into the `main` branch, Vercel automatically promotes the new deployment to production in a single atomic switch.
 
-This is logical for Vercel free tier because Vercel handles release promotion and keeps older deployments without requiring us to manage servers manually.
+### Why this strategy?
 
-## Rollback Guide
+- Ensures **zero-downtime deployments**
+- Allows safe testing through **preview deployments for each pull request**
+- Provides a **fast rollback mechanism** (previous deployment remains available)
+- Reduces production risk by separating build/test and live traffic
 
-Use this if a bug is discovered in production.
+## Implementation of the Strategy
 
-### Option A: Roll back from the Vercel dashboard
+I implemented a **Blue-Green Deployment strategy using GitHub Actions and Vercel** to ensure safe and reliable releases.
 
-1. Open the Vercel dashboard.
-2. Select the project.
-3. Go to the **Deployments** tab.
-4. Find the last stable deployment before the bad release.
-5. Open the deployment menu.
-6. Choose **Promote to Production**.
-7. Wait for Vercel to update production.
-8. Verify `/` and `/health` in the browser.
+### Steps used in the workflow:
 
-### Option B: Roll back through GitHub Actions
+1. **Continuous Integration (CI) on every push and pull request**
+   - The workflow starts on every `push` and `pull_request`
+   - Code is checked out and Node.js environment is set up
+   - Dependencies are installed using `npm ci`
+   - Automated tests are executed using `npm test`
+   - This ensures only tested code can proceed to deployment
 
-1. Revert the bad commit or merge commit on `main`.
-2. Push the revert to GitHub.
-3. GitHub Actions runs tests again.
-4. If tests pass, the workflow deploys the reverted version to Vercel production.
-5. Verify the live application.
+2. **Controlled deployment trigger**
+   - Deployment job runs only when:
+     - Branch is `main`
+     - Event is a `push`
+   - This prevents accidental production deployments from feature branches
 
-Option A is fastest during an incident. Option B keeps Git history aligned with production.
+3. **Vercel environment setup**
+   - Project configuration is pulled using `vercel pull`
+   - Ensures correct production settings are used during deployment
+
+4. **Production build step**
+   - Application is built using `vercel build --prod`
+   - Generates a production-ready artifact before deployment
+
+5. **Atomic production deployment**
+   - Final deployment is done using `vercel deploy --prebuilt --prod`
+   - This replaces the current production version instantly with zero downtime
+
+### Safety considerations:
+
+- Tests must pass before deployment (`needs: test`)
+- Only `main` branch can trigger production deployment
+- Build is separated from deployment for reliability
+- Vercel ensures instant switching between versions (Blue-Green behavior)
+
+## Rollback Guide (Vercel)
+
+If a deployment introduces issues, you can quickly revert to a previous stable version using Vercel’s built-in deployment history.
+
+### Step-by-step rollback process:
+
+1. **Open Vercel Dashboard**
+   - Go to https://vercel.com/dashboard
+   - Select your project
+
+2. **Navigate to Deployments**
+   - Click the **“Deployments”** tab
+   - You will see a list of all previous deployments (including production and previews)
+
+3. **Find a stable deployment**
+   - Identify a previous deployment that was working correctly
+   - You can open it to verify the build and behavior
+
+4. **Promote the previous version**
+   - Click the **three dots (•••)** next to the selected deployment
+   - Choose **“Promote to Production”**
+
+5. **Confirm rollback**
+   - Vercel immediately switches production traffic to the selected deployment
+   - No downtime occurs during this process
+
+### Summary
+
+Rollback on Vercel is fast and safe because every deployment is immutable and can be instantly promoted back to production with a single action.
 
 ## Reliability Check
 
