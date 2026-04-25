@@ -94,15 +94,6 @@ The `deploy` job uses the Vercel CLI:
 
 Because the deploy job has `needs: test`, GitHub Actions will not deploy broken code.
 
-```mermaid
-flowchart LR
-  A[Push or Pull Request] --> B[Install dependencies]
-  B --> C[Run Jest tests]
-  C -->|tests fail| D[Stop pipeline]
-  C -->|tests pass + push to main| E[Build with Vercel CLI]
-  E --> F[Deploy to Vercel Production]
-```
-
 ## Vercel Deployment Setup
 
 ### 1. Create the Vercel project
