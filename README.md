@@ -15,10 +15,7 @@ Replace this after the first successful Vercel deployment:
 ![Hosted application](./figures/host.jpeg)
 ![Changed Readme file CI](./figures/readme1.jpeg)
 ![Changed Readme file CD](./figures/readme2.jpeg)
-<<<<<<< HEAD
-=======
 ![pull-request](./figures/pull-request.jpeg)
->>>>>>> 5c4f35f (final version)
 
 ## Application Overview
 
@@ -132,8 +129,6 @@ npx vercel link
 After linking locally, Vercel creates `.vercel/project.json`. Copy the `orgId` and `projectId` values into GitHub secrets. Do not commit `.vercel/`.
 
 ## Strategy Explanation
-
-### Which Update Strategy did you choose?
 
 I chose a **Blue-Green Deployment strategy (as implemented by Vercel)**.
 
