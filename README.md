@@ -11,20 +11,6 @@ Replace this after the first successful Vercel deployment:
 - Production: `https://<your-vercel-project>.vercel.app`
 
 ## Screenshots
-
-Add screenshots before submission:
-
-```markdown
-![Hosted application](./docs/screenshot-app.png)
-![Successful GitHub Actions run](./docs/screenshot-actions.png)
-```
-
-Recommended screenshots:
-
-- Browser showing the hosted Vercel application at `/`.
-- Browser showing the health endpoint at `/health`.
-- GitHub Actions showing a green `CI/CD` workflow with `Install & test` and `Deploy to Vercel`.
-
 ## Application Overview
 
 This app intentionally stays small because the assignment is graded on delivery automation, not application complexity.
