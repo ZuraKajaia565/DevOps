@@ -8,9 +8,14 @@ The important rule is enforced in the workflow: **deployment runs only after aut
 
 Replace this after the first successful Vercel deployment:
 
-- Production: `https://<your-vercel-project>.vercel.app`
+- Production: `https://zura-devops-ci-cd.vercel.app/`
 
 ## Screenshots
+
+![Hosted application](./figures/host.jpeg)
+![Changed Readme file CI](./figures/readme1.jpeg)
+![Changed Readme file CD](./figures/readme2.jpeg)
+
 ## Application Overview
 
 This app intentionally stays small because the assignment is graded on delivery automation, not application complexity.
