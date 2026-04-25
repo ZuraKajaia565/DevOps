@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zura CI/CD Pipeline</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="/">Zura DevOps</a>
+      <nav aria-label="Project links">
+        <a href="/health">Health</a>
+        <a href="https://vercel.com" target="_blank" rel="noreferrer">Vercel</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">CI/CD Assignment</p>
+          <h1>Zura CI/CD Pipeline</h1>
+          <p class="lead">
+            A small Express application deployed to Vercel through GitHub
+            Actions. The pipeline runs tests first, then deploys production only
+            when the quality gate passes.
+          </p>
+
+          <div class="actions">
+            <a class="primary-link" href="/health">View health check</a>
+            <a class="text-link" href="https://github.com" target="_blank" rel="noreferrer">
+              GitHub Actions workflow
+            </a>
+          </div>
+        </div>
+
+        <aside class="release-note" aria-label="Release status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <strong>Production flow</strong>
+          <p>Push to <code>main</code> → tests pass → Vercel deploys.</p>
+        </aside>
+      </section>
+
+      <section class="pipeline" aria-label="Pipeline summary">
+        <h2>Pipeline overview</h2>
+        <ol>
+          <li>
+            <strong>Test</strong>
+            <span>Install dependencies and run Jest on each push or pull request.</span>
+          </li>
+          <li>
+            <strong>Deploy</strong>
+            <span>Deploy to Vercel only after tests pass on the <code>main</code> branch.</span>
+          </li>
+          <li>
+            <strong>Rollback</strong>
+            <span>Promote a previous stable Vercel deployment if production breaks.</span>
+          </li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>

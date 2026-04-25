@@ -1,0 +1,20 @@
+{
+  "name": "zura-devops-ci-cd",
+  "version": "1.0.0",
+  "description": "Minimal app for CI/CD assignment (Vercel + GitHub Actions)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "NODE_ENV=test jest --ci --coverage --detectOpenHandles --forceExit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
